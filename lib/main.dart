@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_clean_arch/src/core/mixins/device_orientation.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'src/common/providers/theme_provider.dart';
@@ -8,6 +9,7 @@ import 'src/core/services/navigation/navigation_route.dart';
 
 void main() {
   GetStorage.init();
+  DeviceOrientationSettings.screenHorizontal();
   runApp(
     MultiProvider(
       providers: AppConstants.defaultProviders,
