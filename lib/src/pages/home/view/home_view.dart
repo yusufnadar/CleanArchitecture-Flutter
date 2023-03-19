@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../core/base/state/base_state.dart';
 import '../../../core/base/view/base_view.dart';
-import '../provider/home_provider.dart';
+import '../viewModel/home_view_model.dart';
 import '../widget/one_item.dart';
 
 class HomeView extends StatefulWidget {
@@ -14,8 +14,8 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends BaseState<HomeView> {
   @override
   Widget build(BuildContext context) {
-    return BaseView(
-      viewModel: HomeProvider(),
+    return BaseView<HomeViewModel>(
+      viewModel: HomeViewModel(),
       onPageBuilder: (context, model, child) {
         return Scaffold(
           appBar: buildAppBar(model),
@@ -25,7 +25,7 @@ class _HomeViewState extends BaseState<HomeView> {
     );
   }
 
-  ListView buildBody(HomeProvider model) {
+  ListView buildBody(HomeViewModel model) {
     return ListView.builder(
       itemCount: model.posts.length,
       itemBuilder: (context, index) {
@@ -37,13 +37,11 @@ class _HomeViewState extends BaseState<HomeView> {
     );
   }
 
-  AppBar buildAppBar(HomeProvider model) {
+  AppBar buildAppBar(HomeViewModel model) {
     return AppBar(
       actions: [
         IconButton(
-          onPressed: () {
-            model.get();
-          },
+          onPressed: () async => await model.get(),
           icon: const Icon(Icons.refresh),
         )
       ],

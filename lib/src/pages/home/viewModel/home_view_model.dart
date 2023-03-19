@@ -4,10 +4,10 @@ import '../../../core/exports/constants_exports.dart';
 import '../../../core/mixins/show_bar.dart';
 import '../model/post_model.dart';
 
-class HomeProvider extends ChangeNotifier with BaseViewModel,ShowBar {
+class HomeViewModel extends ChangeNotifier with BaseViewModel,ShowBar {
   List<PostModel> posts = <PostModel>[];
 
-  void get() async {
+  Future<void> get() async {
     try{
       var res = await networkService!.send<PostModel, List<PostModel>>(
         EndPointConstants.posts,

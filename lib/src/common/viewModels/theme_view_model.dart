@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/services/theme/theme_service.dart';
 
-class ThemeProvider extends ChangeNotifier{
+class ThemeViewModel extends ChangeNotifier {
   ThemeMode get themeMode => themeService.getTheme();
 
   set themeMode(ThemeMode themeMode) => this.themeMode = themeMode;

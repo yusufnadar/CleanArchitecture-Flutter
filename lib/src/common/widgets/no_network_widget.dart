@@ -4,15 +4,15 @@ import 'package:provider/provider.dart';
 import '../../core/base/view/base_view.dart';
 import '../../core/exports/constants_exports.dart';
 import '../../core/services/connection/connection_service.dart';
-import '../providers/connection_provider.dart';
+import '../viewModels/connection_view_model.dart';
 
 class NoNetworkWidget extends StatelessWidget {
   const NoNetworkWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<ConnectionProvider>(
-      viewModel: ConnectionProvider(),
+    return BaseView<ConnectionViewModel>(
+      viewModel: ConnectionViewModel(),
       onModelReady: (model) {
         ConnectionService.instance.handleNetworkChange(context);
       },
@@ -20,9 +20,10 @@ class NoNetworkWidget extends StatelessWidget {
         ConnectionService.instance.dispose();
       },
       onPageBuilder: (widget, model, child) {
-        if (context.watch<ConnectionProvider>().networkResult == NetworkResult.off) {
+        if (context.watch<ConnectionViewModel>().networkResult ==
+            NetworkResult.off) {
           return GestureDetector(
-            onTap: ()=>model.changeNetworkResult(NetworkResult.on),
+            onTap: () => model.changeNetworkResult(NetworkResult.on),
             child: Container(
               height: context.height * 0.05,
               width: context.width,

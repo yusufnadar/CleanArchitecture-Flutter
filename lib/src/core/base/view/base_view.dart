@@ -4,18 +4,20 @@ import 'package:provider/provider.dart';
 import '../viewModel/base_view_model.dart';
 
 class BaseView<T extends ChangeNotifier> extends StatefulWidget {
-  const BaseView({
-    Key? key,
-    required this.viewModel,
-    required this.onPageBuilder,
-    this.onModelReady,
-    this.onDispose,
-  }) : super(key: key);
+  const BaseView(
+      {Key? key,
+      required this.viewModel,
+      required this.onPageBuilder,
+      this.onModelReady,
+      this.onDispose,
+      this.justConsumer})
+      : super(key: key);
   final Widget Function(BuildContext context, T model, Widget? child)
       onPageBuilder;
   final T viewModel;
   final void Function(T model)? onModelReady;
   final VoidCallback? onDispose;
+  final bool? justConsumer;
 
   @override
   _BaseViewState<T> createState() => _BaseViewState<T>();
@@ -24,8 +26,8 @@ class BaseView<T extends ChangeNotifier> extends StatefulWidget {
 class _BaseViewState<T extends ChangeNotifier> extends State<BaseView<T>> {
   @override
   void initState() {
-    if (widget.onModelReady != null) widget.onModelReady!(widget.viewModel);
     (widget.viewModel as BaseViewModel).viewModelContext = context;
+    if (widget.onModelReady != null) widget.onModelReady!(widget.viewModel);
     super.initState();
   }
 
@@ -37,11 +39,17 @@ class _BaseViewState<T extends ChangeNotifier> extends State<BaseView<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<T>(
-      create: (context) => widget.viewModel,
-      child: Consumer<T>(
+    if (widget.justConsumer == true) {
+      return Consumer<T>(
         builder: widget.onPageBuilder,
-      ),
-    );
+      );
+    } else {
+      return ChangeNotifierProvider<T>(
+        create: (context) => widget.viewModel,
+        child: Consumer<T>(
+          builder: widget.onPageBuilder,
+        ),
+      );
+    }
   }
 }

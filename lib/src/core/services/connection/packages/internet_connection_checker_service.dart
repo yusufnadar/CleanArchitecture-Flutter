@@ -1,51 +1,55 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
-
-import '../../../../common/providers/connection_provider.dart';
+import '../../../../common/viewModels/connection_view_model.dart';
 import '../../../constants/enums/network_results_enums.dart';
 
 class InternetConnectionCheckerService {
-  final _checker = InternetConnectionChecker();
-
   InternetConnectionCheckerService._init();
 
+  final _checker = InternetConnectionChecker();
+
   static final InternetConnectionCheckerService _instance =
-      InternetConnectionCheckerService._init();
+  InternetConnectionCheckerService._init();
 
   static InternetConnectionCheckerService get instance => _instance;
 
-  void listenConnection(context) {
+  void listenConnection(BuildContext context) {
     _checker.onStatusChange.listen((event) {
       // internet çektiği halde yoksa diğer taraf bunu algılamıyor
       // ama bu taraf bunu algılayıp disconnected hatası veriyor
       if (event.name == 'disconnected') {
-        Provider.of<ConnectionProvider>(context,listen: false)
+        Provider.of<ConnectionViewModel>(context, listen: false)
             .changeNetworkResult(NetworkResult.off);
       } else if (event.name == 'connected') {
-        Provider.of<ConnectionProvider>(context,listen: false)
-            .changeNetworkResult(NetworkResult.on,);
+        Provider.of<ConnectionViewModel>(context, listen: false)
+            .changeNetworkResult(
+          NetworkResult.on,
+        );
       }
     });
   }
 
-  Future<void> checkInternet(shouldConnect,context) async {
+  Future<void> checkInternet(bool shouldConnect, BuildContext context) async {
     try {
       if (shouldConnect == true) {
-        var result = await _checker.connectionStatus;
+        final result = await _checker.connectionStatus;
         if (result == InternetConnectionStatus.connected) {
-          Provider.of<ConnectionProvider>(context,listen: false)
+          Provider.of<ConnectionViewModel>(context, listen: false)
               .changeNetworkResult(NetworkResult.on);
         } else {
-          Provider.of<ConnectionProvider>(context,listen: false)
+          Provider.of<ConnectionViewModel>(context, listen: false)
               .changeNetworkResult(NetworkResult.off);
         }
       } else {
-        Provider.of<ConnectionProvider>(context,listen: false)
+        Provider.of<ConnectionViewModel>(context, listen: false)
             .changeNetworkResult(NetworkResult.off);
       }
     } on SocketException catch (_) {
-      Provider.of<ConnectionProvider>(context,listen: false)
+      Provider.of<ConnectionViewModel>(context, listen: false)
           .changeNetworkResult(NetworkResult.off);
     }
   }

@@ -1,6 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../common/providers/connection_provider.dart';
+import '../../../common/viewModels/connection_view_model.dart';
 import '../../constants/enums/network_results_enums.dart';
 import 'packages/connectivity_service.dart';
 import 'packages/internet_connection_checker_service.dart';
@@ -12,12 +16,12 @@ class ConnectionService {
 
   static ConnectionService get instance => _instance;
 
-  Future<void> handleNetworkChange(context) async {
+  Future<void> handleNetworkChange(BuildContext context) async {
     // eğer internet ilk başta yoksa diye
     // connected kısmını beklemeden false yapıyoruz
-    var isConnect = await ConnectivityService.instance.checkConnectivity();
+    final isConnect = await ConnectivityService.instance.checkConnectivity();
     if (isConnect.name == 'none') {
-      Provider.of<ConnectionProvider>(context, listen: false)
+      Provider.of<ConnectionViewModel>(context, listen: false)
           .changeNetworkResult(NetworkResult.off);
     }
     ConnectivityService.instance.listenConnectivity(context);

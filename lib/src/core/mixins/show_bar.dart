@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import '../exports/constants_exports.dart';
 
 mixin ShowBar {
-  void showErrorBar(context, error, {duration, backgroundColor, style}) {
+  void showErrorBar(
+      BuildContext context,
+      dynamic message, {
+        Duration? duration,
+        Color? backgroundColor,
+        TextStyle? style,
+      }) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          error,
+          message.toString(),
           style: style ??
               TextStyleConstants.regularStyle(
                 color: ColorConstants.white,
@@ -18,11 +24,17 @@ mixin ShowBar {
     );
   }
 
-  void showSuccessBar(context, error, {duration, backgroundColor, style}) {
+  void showSuccessBar(
+      BuildContext context,
+      dynamic message, {
+        Duration? duration,
+        Color? backgroundColor,
+        TextStyle? style,
+      }) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          error,
+          message.toString(),
           style: style ??
               TextStyleConstants.regularStyle(
                 color: ColorConstants.white,

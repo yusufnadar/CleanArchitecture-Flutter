@@ -1,15 +1,22 @@
-// ignore_for_file: join_return_with_assignment, overridden_fields
+// ignore_for_file: join_return_with_assignment, overridden_fields, strict_raw_type
 
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
+import '../../../common/models/pagination_model.dart';
 import '../../../core/services/network/response_parser.dart';
 import '../../base/error/base_error.dart';
 import '../../base/model/base_model.dart';
 import '../../exports/constants_exports.dart';
-import 'IResponseModel.dart';
+import '../local/local_service.dart';
+import 'response_model.dart';
 
 class NetworkService with DioMixin {
+
+  NetworkService._init() {
+    interceptors.add(InterceptorsWrapper());
+    httpClientAdapter = IOHttpClientAdapter();
+  }
   static NetworkService? _instance;
 
   static NetworkService? get instance {
@@ -17,39 +24,48 @@ class NetworkService with DioMixin {
     return _instance;
   }
 
-  NetworkService._init() {
-    interceptors.add(InterceptorsWrapper());
-    httpClientAdapter = IOHttpClientAdapter();
-  }
-
   @override
   final BaseOptions options = BaseOptions(
-      baseUrl: EndPointConstants.baseUrl,
-      headers: {'Content-Type': 'application/json'});
+    baseUrl: EndPointConstants.baseUrl,
+  );
 
-  Future<IResponseModel<R>> send<T, R>(
-    String path, {
-    required HttpTypes type,
-    required BaseModel<T> parseModel,
-    dynamic data,
-    Map<String, dynamic>? queryParameters,
-    void Function(int, int)? onReceiveProgress,
-  }) async {
+  Future<IResponseModel<R>> send<T extends BaseModel, R>(
+      String path, {
+        required HttpTypes type,
+        required T parseModel,
+        dynamic data,
+        bool? isPagination,
+        Map<String, dynamic>? queryParameters,
+        void Function(int, int)? onReceiveProgress,
+      }) async {
     final response = await request<dynamic>(
       path,
       data: data,
       options: Options(
         method: type.name,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization':
+          'Bearer ${LocalService.instance.read(LocalConstants.accessToken)}'
+        },
       ),
     );
     switch (response.statusCode) {
       case HttpStatus.ok:
       case HttpStatus.accepted:
-        final model = responseParser<T, R>(parseModel, response.data);
-        return ResponseModel<R>(data: model);
+        if (isPagination != true) {
+          final model =
+          responseParser<T, R>(parseModel as BaseModel<T>, response.data);
+          return ResponseModel<R>(data: model);
+        } else {
+          final model = PaginationModel<T>()
+              .fromJson(response.data as Map<String,dynamic>, parseModel)
+              .results as R;
+          return ResponseModel<R>(data: model);
+        }
       default:
         return ResponseModel(
-          error: BaseError(response.data),
+          error: BaseError(response.data.toString()),
         );
     }
   }

@@ -1,9 +1,15 @@
+// ignore_for_file: avoid_classes_with_only_static_members
+
 import 'package:flutter/material.dart';
 import '../../exports/constants_exports.dart';
 
 class TextStyleConstants {
-  static TextStyle thinStyle(
-      {double? fontSize, color, double? height, TextDecoration? decoration}) {
+  static TextStyle thinStyle({
+    double? fontSize,
+    Color? color,
+    double? height,
+    TextDecoration? decoration,
+  }) {
     return TextStyle(
       fontSize: fontSize ?? 14,
       color: color ?? ColorConstants.black,
@@ -14,8 +20,12 @@ class TextStyleConstants {
     );
   }
 
-  static TextStyle lightStyle(
-      {double? fontSize, color, double? height, TextDecoration? decoration}) {
+  static TextStyle lightStyle({
+    double? fontSize,
+    Color? color,
+    double? height,
+    TextDecoration? decoration,
+  }) {
     return TextStyle(
       fontSize: fontSize ?? 14,
       color: color ?? ColorConstants.black,
@@ -26,8 +36,12 @@ class TextStyleConstants {
     );
   }
 
-  static TextStyle regularStyle(
-      {double? fontSize, color, double? height, TextDecoration? decoration}) {
+  static TextStyle regularStyle({
+    double? fontSize,
+    Color? color,
+    double? height,
+    TextDecoration? decoration,
+  }) {
     return TextStyle(
       fontSize: fontSize ?? 14,
       color: color ?? ColorConstants.black,
@@ -38,8 +52,12 @@ class TextStyleConstants {
     );
   }
 
-  static TextStyle mediumStyle(
-      {double? fontSize, color, double? height, TextDecoration? decoration}) {
+  static TextStyle mediumStyle({
+    double? fontSize,
+    Color? color,
+    double? height,
+    TextDecoration? decoration,
+  }) {
     return TextStyle(
       fontSize: fontSize ?? 14,
       color: color ?? ColorConstants.black,
@@ -50,8 +68,12 @@ class TextStyleConstants {
     );
   }
 
-  static TextStyle semiBoldStyle(
-      {double? fontSize, color, double? height, TextDecoration? decoration}) {
+  static TextStyle semiBoldStyle({
+    double? fontSize,
+    Color? color,
+    double? height,
+    TextDecoration? decoration,
+  }) {
     return TextStyle(
       fontSize: fontSize ?? 14,
       color: color ?? ColorConstants.black,
@@ -62,8 +84,12 @@ class TextStyleConstants {
     );
   }
 
-  static TextStyle boldStyle(
-      {double? fontSize, color, double? height, TextDecoration? decoration}) {
+  static TextStyle boldStyle({
+    double? fontSize,
+    Color? color,
+    double? height,
+    TextDecoration? decoration,
+  }) {
     return TextStyle(
       fontSize: fontSize ?? 14,
       color: color ?? ColorConstants.black,

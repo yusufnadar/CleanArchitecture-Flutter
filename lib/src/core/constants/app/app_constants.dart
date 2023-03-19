@@ -1,17 +1,17 @@
 import 'package:provider/provider.dart';
-import '../../../common/providers/connection_provider.dart';
-import '../../../common/providers/theme_provider.dart';
+import '../../../common/viewModels/connection_view_model.dart';
+import '../../../common/viewModels/theme_view_model.dart';
 
 class AppConstants {
   static const appName = 'AppName';
   static const fontFamily = 'fontFamily';
 
   static final defaultProviders = [
-    ChangeNotifierProvider<ThemeProvider>(
-      create: (context) => ThemeProvider(),
+    ChangeNotifierProvider<ThemeViewModel>(
+      create: (context) => ThemeViewModel(),
     ),
-    ChangeNotifierProvider<ConnectionProvider>(
-      create: (context) => ConnectionProvider(),
+    ChangeNotifierProvider<ConnectionViewModel>(
+      create: (context) => ConnectionViewModel(),
     ),
   ];
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/material.dart';
 import 'internet_connection_checker_service.dart';
 
 class ConnectivityService {
@@ -15,11 +16,11 @@ class ConnectivityService {
   //final networkCacheController = Get.find<NetworkCacheController>();
   final checkerService = InternetConnectionCheckerService.instance;
 
-  Future<ConnectivityResult> checkConnectivity() async {
-    return await _connectivity.checkConnectivity();
+  Future<ConnectivityResult> checkConnectivity() {
+    return _connectivity.checkConnectivity().then((value) => value);
   }
 
-  void listenConnectivity(context) {
+  void listenConnectivity(BuildContext context) {
     _subscription = _connectivity.onConnectivityChanged.listen((event) {
       switch (event) {
         case ConnectivityResult.bluetooth:
@@ -29,11 +30,11 @@ class ConnectivityService {
         case ConnectivityResult.vpn:
           // eğer kaynak değişiminde internet varsa direkt bağlansın diye
           // connected kısmını beklemeden true yapıyoruz
-          checkerService.checkInternet(true,context);
+          checkerService.checkInternet(true, context);
           break;
         case ConnectivityResult.none:
         case ConnectivityResult.other:
-          checkerService.checkInternet(false,context);
+          checkerService.checkInternet(false, context);
           break;
       }
     });

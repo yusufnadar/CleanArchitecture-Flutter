@@ -1,6 +1,8 @@
 import 'package:get_storage/get_storage.dart';
 
 class LocalService {
+
+  LocalService._init();
   static late GetStorage _getStorage;
   static LocalService? _instance;
 
@@ -10,17 +12,15 @@ class LocalService {
     return _instance!;
   }
 
-  LocalService._init();
-
-  dynamic read(key) {
+  dynamic read(String key) {
     return _getStorage.read(key);
   }
 
-  Future<void> write(key, dynamic value) async {
+  Future<void> write(String key, dynamic value) async {
     await _getStorage.write(key, value);
   }
 
-  Future<void> remove(key) async {
+  Future<void> remove(String key) async {
     await _getStorage.remove(key);
   }
 }
