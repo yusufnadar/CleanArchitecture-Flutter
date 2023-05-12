@@ -1,9 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:async';
-import 'package:connectivity_plus/connectivity_plus.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../../common/viewModels/connection_view_model.dart';
 import '../../constants/enums/network_results_enums.dart';
 import 'packages/connectivity_service.dart';

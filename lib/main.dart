@@ -7,8 +7,8 @@ import 'src/core/exports/constants_exports.dart';
 import 'src/core/services/navigation/navigation_route.dart';
 import 'src/core/services/navigation/navigation_service.dart';
 
-void main() {
-  GetStorage.init();
+void main() async{
+  await GetStorage.init();
   runApp(
     MultiProvider(
       providers: AppConstants.defaultProviders,
@@ -30,11 +30,12 @@ class MyApp extends StatelessWidget {
         darkTheme: ThemeConstants.darkTheme,
         debugShowCheckedModeBanner: false,
         themeMode: context.watch<ThemeViewModel>().themeMode,
-        initialRoute: NavigationConstants.home,
         builder: (context, child) => BuilderWidget(child: child),
+        initialRoute: NavigationConstants.home,
         onGenerateRoute: NavigationRoute.instance.generateRoute,
         navigatorKey: NavigationService.instance.navigatorKey,
       ),
     );
   }
 }
+

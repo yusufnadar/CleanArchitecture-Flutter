@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+
 import '../exports/constants_exports.dart';
+import '../services/navigation/navigation_service.dart';
 
 mixin ShowBar {
   void showErrorBar(
-      BuildContext context,
-      dynamic message, {
-        Duration? duration,
-        Color? backgroundColor,
-        TextStyle? style,
-      }) {
-    ScaffoldMessenger.of(context).showSnackBar(
+    dynamic message, {
+    Duration? duration,
+    Color? backgroundColor,
+    TextStyle? style,
+    BuildContext? context,
+  }) {
+    ScaffoldMessenger.of(
+            context ?? NavigationService.instance.navigatorKey.currentContext!)
+        .showSnackBar(
       SnackBar(
         content: Text(
           message.toString(),
@@ -25,13 +29,15 @@ mixin ShowBar {
   }
 
   void showSuccessBar(
-      BuildContext context,
-      dynamic message, {
-        Duration? duration,
-        Color? backgroundColor,
-        TextStyle? style,
-      }) {
-    ScaffoldMessenger.of(context).showSnackBar(
+    dynamic message, {
+    Duration? duration,
+    Color? backgroundColor,
+    TextStyle? style,
+    BuildContext? context,
+  }) {
+    ScaffoldMessenger.of(
+            context ?? NavigationService.instance.navigatorKey.currentContext!)
+        .showSnackBar(
       SnackBar(
         content: Text(
           message.toString(),

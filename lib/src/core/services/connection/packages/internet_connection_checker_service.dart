@@ -1,9 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
+
 import '../../../../common/viewModels/connection_view_model.dart';
 import '../../../constants/enums/network_results_enums.dart';
 

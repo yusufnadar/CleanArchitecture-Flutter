@@ -9,9 +9,6 @@ class ThemeViewModel extends ChangeNotifier {
   final themeService = ThemeService.instance;
 
   void changeTheme() {
-    themeMode = themeService.isSavedDarkMode() == false
-        ? ThemeMode.dark
-        : ThemeMode.light;
     themeService.setTheme(!themeService.isSavedDarkMode());
     notifyListeners();
   }
